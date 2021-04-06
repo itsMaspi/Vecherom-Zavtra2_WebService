@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="vz2ModelStoreContainer" CdmEntityContainer="vz2Entities">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="vz2Model.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="procAddUser" FunctionName="vz2Model.Store.procAddUser" />
+    <FunctionImportMapping FunctionImportName="procLogin" FunctionName="vz2Model.Store.procLogin" />
+  </EntityContainerMapping>
+</Mapping>
