@@ -18,6 +18,7 @@
     <Parameter Name="pUsername" Type="nvarchar" Mode="In" />
     <Parameter Name="pPassword" Type="nvarchar" Mode="In" />
     <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+    <Parameter Name="userID" Type="int" Mode="InOut" />
   </Function>
   <EntityContainer Name="vz2ModelStoreContainer">
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />

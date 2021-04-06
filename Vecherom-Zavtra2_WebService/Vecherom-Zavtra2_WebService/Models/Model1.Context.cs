@@ -42,7 +42,7 @@ namespace Vecherom_Zavtra2_WebService.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("procAddUser", pUsernameParameter, pPasswordParameter, responseMessage);
         }
     
-        public virtual int procLogin(string pUsername, string pPassword, ObjectParameter responseMessage)
+        public virtual int procLogin(string pUsername, string pPassword, ObjectParameter responseMessage, ObjectParameter userID)
         {
             var pUsernameParameter = pUsername != null ?
                 new ObjectParameter("pUsername", pUsername) :
@@ -52,7 +52,7 @@ namespace Vecherom_Zavtra2_WebService.Models
                 new ObjectParameter("pPassword", pPassword) :
                 new ObjectParameter("pPassword", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("procLogin", pUsernameParameter, pPasswordParameter, responseMessage);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("procLogin", pUsernameParameter, pPasswordParameter, responseMessage, userID);
         }
     }
 }

@@ -17,24 +17,39 @@ namespace Vecherom_Zavtra2_WebService.Models
 			return Convert.ToString(responseMessage.Value);
 		}
 
-		public string Login(string username, string password)
+		public Response Login(string username, string password)
 		{
 			System.Data.Entity.Core.Objects.ObjectParameter responseMessage = new System.Data.Entity.Core.Objects.ObjectParameter("responseMessage", typeof(string));
+			System.Data.Entity.Core.Objects.ObjectParameter userID = new System.Data.Entity.Core.Objects.ObjectParameter("userID", typeof(int));
 			using (var db = new vz2Entities())
 			{
-				db.procLogin(username, password, responseMessage);
+				db.procLogin(username, password, responseMessage, userID);
 			}
-			return Convert.ToString(responseMessage.Value);
+			int uID = -1;
+			if (userID.Value != System.DBNull.Value)
+			{
+				uID = Convert.ToInt32(userID.Value);
+			}
+			Response r = new Response(Convert.ToString(responseMessage.Value), uID);
+			return r;
 		}
 
-		public bool RemoveAccount(string username, string password)
+		public bool RemoveAccount(int userID)
 		{
-			System.Data.Entity.Core.Objects.ObjectParameter responseMessage = new System.Data.Entity.Core.Objects.ObjectParameter("responseMessage", typeof(string));
 			using (var db = new vz2Entities())
 			{
-				db.Users.Remove()
+				try
+				{
+					db.Users.Remove(db.Users.Where(x => x.UserId == userID).FirstOrDefault());
+					db.SaveChanges();
+					return true;
+				}
+				catch (Exception)
+				{
+					return false;
+				}
+				
 			}
-			return Convert.ToString(responseMessage.Value);
 		}
 	}
 }

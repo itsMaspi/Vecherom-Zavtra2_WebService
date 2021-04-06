@@ -28,7 +28,7 @@ namespace Vecherom_Zavtra2_WebService.Controllers
         public HttpResponseMessage Login(string username, string password)
         {
             Repository r = new Repository();
-            string responseMessage = r.Login(username, password);
+            string responseMessage = r.Login(username, password).Message;
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, responseMessage);
             return response;
         }
@@ -40,13 +40,13 @@ namespace Vecherom_Zavtra2_WebService.Controllers
         {
             Repository r = new Repository();
             bool resp = false;
-            string responseMessage = r.Login(username, password);
-            if (responseMessage.Equals("Successully logged in"))
+            Response loginResponse = r.Login(username, password);
+            if (loginResponse != null && loginResponse.Message.Equals("User successfully logged in"))
 			{
-                r.
+                r.RemoveAccount(loginResponse.UserID);
                 resp = true;
             }
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, responseMessage);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, resp);
             return response;
         }
     }

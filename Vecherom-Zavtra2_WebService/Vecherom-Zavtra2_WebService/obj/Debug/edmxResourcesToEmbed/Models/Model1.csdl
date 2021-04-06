@@ -20,6 +20,7 @@
       <Parameter Name="pUsername" Mode="In" Type="String" />
       <Parameter Name="pPassword" Mode="In" Type="String" />
       <Parameter Name="responseMessage" Mode="InOut" Type="String" />
+      <Parameter Name="userID" Mode="InOut" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
 </Schema>
