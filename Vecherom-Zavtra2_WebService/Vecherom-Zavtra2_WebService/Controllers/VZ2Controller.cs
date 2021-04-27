@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,7 +18,7 @@ namespace Vecherom_Zavtra2_WebService.Controllers
         public HttpResponseMessage Signup(string username, string password)
         {
             Repository r = new Repository();
-            string responseMessage = r.Signup(username, password);
+            Response responseMessage = r.Signup(username, password);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, responseMessage);
             return response;
         }
@@ -28,7 +29,7 @@ namespace Vecherom_Zavtra2_WebService.Controllers
         public HttpResponseMessage Login(string username, string password)
         {
             Repository r = new Repository();
-            string responseMessage = r.Login(username, password).Message;
+            Response responseMessage = r.Login(username, password);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, responseMessage);
             return response;
         }

@@ -7,14 +7,14 @@ namespace Vecherom_Zavtra2_WebService.Models
 {
 	public class Repository
 	{
-		public string Signup(string username, string password)
+		public Response Signup(string username, string password)
 		{
 			System.Data.Entity.Core.Objects.ObjectParameter responseMessage = new System.Data.Entity.Core.Objects.ObjectParameter("responseMessage", typeof(string));
 			using (var db = new vz2Entities())
 			{
 				db.procAddUser(username, password, responseMessage);
 			}
-			return Convert.ToString(responseMessage.Value);
+			return new Response(Convert.ToString(responseMessage.Value), -1);
 		}
 
 		public Response Login(string username, string password)
