@@ -14,9 +14,18 @@ namespace Vecherom_Zavtra2_WebService.Models
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.UserCfgs = new HashSet<UserCfg>();
+        }
+    
         public int UserId { get; set; }
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public Nullable<System.Guid> Salt { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserCfg> UserCfgs { get; set; }
     }
 }

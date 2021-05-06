@@ -51,5 +51,52 @@ namespace Vecherom_Zavtra2_WebService.Models
 				
 			}
 		}
+
+
+		public string GetUserCfg(int userID)
+		{
+			using (var db = new vz2Entities())
+			{
+				try
+				{
+					return db.UserCfgs.Where(x => x.userID == userID).FirstOrDefault().cfg;
+				}
+				catch (Exception ex)
+				{
+					return "";
+				}
+			}
+		}
+
+		public bool UpdateUserCfg(int userID, string config)
+		{
+			using (var db = new vz2Entities())
+			{
+				try
+				{
+					var userCfg = db.UserCfgs.Where(x => x.userID == userID).FirstOrDefault();
+					// Update the config if there's one already
+					if (userCfg != null)
+					{
+						userCfg.cfg = config;
+						db.SaveChanges();
+						return true;
+					}
+					// Insert a new config if there isn't one already
+					userCfg = new UserCfg()
+					{
+						userID = userID,
+						cfg = config
+					};
+					db.UserCfgs.Add(userCfg);
+					db.SaveChanges();
+					return true;
+				}
+				catch (Exception ex)
+				{
+					return false;
+				}
+			}
+		}
 	}
 }

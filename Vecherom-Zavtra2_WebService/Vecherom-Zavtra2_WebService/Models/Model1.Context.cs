@@ -28,6 +28,7 @@ namespace Vecherom_Zavtra2_WebService.Models
         }
     
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserCfg> UserCfgs { get; set; }
     
         public virtual int procAddUser(string pUsername, string pPassword, ObjectParameter responseMessage)
         {

@@ -9,6 +9,26 @@
     <Property Name="PasswordHash" Type="binary" MaxLength="64" Nullable="false" />
     <Property Name="Salt" Type="uniqueidentifier" />
   </EntityType>
+  <EntityType Name="UserCfg">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" Nullable="false" />
+    <Property Name="cfg" Type="text" />
+  </EntityType>
+  <Association Name="FK_UserCfg_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserCfg" Type="Self.UserCfg" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserCfg">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="procAddUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="pUsername" Type="nvarchar" Mode="In" />
     <Parameter Name="pPassword" Type="nvarchar" Mode="In" />
@@ -22,5 +42,10 @@
   </Function>
   <EntityContainer Name="vz2ModelStoreContainer">
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserCfg" EntityType="Self.UserCfg" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_UserCfg_User" Association="Self.FK_UserCfg_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserCfg" EntitySet="UserCfg" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

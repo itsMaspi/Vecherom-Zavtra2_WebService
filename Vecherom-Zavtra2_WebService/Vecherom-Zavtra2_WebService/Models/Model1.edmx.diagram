@@ -6,6 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d61299b42c534849a3067801699ac86d" Name="Diagram1">
         <EntityTypeShape EntityType="vz2Model.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="vz2Model.UserCfg" Width="1.5" PointX="3" PointY="0.875" />
+        <AssociationConnector Association="vz2Model.FK_UserCfg_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -14,6 +14,26 @@
           <Property Name="PasswordHash" Type="binary" MaxLength="64" Nullable="false" />
           <Property Name="Salt" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="UserCfg">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="cfg" Type="text" />
+        </EntityType>
+        <Association Name="FK_UserCfg_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserCfg" Type="Self.UserCfg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserCfg">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="procAddUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pUsername" Type="nvarchar" Mode="In" />
           <Parameter Name="pPassword" Type="nvarchar" Mode="In" />
@@ -27,6 +47,11 @@
         </Function>
         <EntityContainer Name="vz2ModelStoreContainer">
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserCfg" EntityType="Self.UserCfg" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UserCfg_User" Association="Self.FK_UserCfg_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserCfg" EntitySet="UserCfg" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -40,6 +65,7 @@
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PasswordHash" Type="Binary" MaxLength="64" FixedLength="true" Nullable="false" />
           <Property Name="Salt" Type="Guid" />
+          <NavigationProperty Name="UserCfgs" Relationship="vz2Model.FK_UserCfg_User" FromRole="User" ToRole="UserCfg" />
         </EntityType>
         <EntityContainer Name="vz2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.User" />
@@ -54,7 +80,33 @@
             <Parameter Name="responseMessage" Mode="InOut" Type="String" />
             <Parameter Name="userID" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="UserCfgs" EntityType="vz2Model.UserCfg" />
+          <AssociationSet Name="FK_UserCfg_User" Association="vz2Model.FK_UserCfg_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserCfg" EntitySet="UserCfgs" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="UserCfg">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="cfg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="vz2Model.FK_UserCfg_User" FromRole="UserCfg" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserCfg_User">
+          <End Type="vz2Model.User" Role="User" Multiplicity="1" />
+          <End Type="vz2Model.UserCfg" Role="UserCfg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserCfg">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -73,6 +125,15 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="procAddUser" FunctionName="vz2Model.Store.procAddUser" />
           <FunctionImportMapping FunctionImportName="procLogin" FunctionName="vz2Model.Store.procLogin" />
+          <EntitySetMapping Name="UserCfgs">
+            <EntityTypeMapping TypeName="vz2Model.UserCfg">
+              <MappingFragment StoreEntitySet="UserCfg">
+                <ScalarProperty Name="cfg" ColumnName="cfg" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

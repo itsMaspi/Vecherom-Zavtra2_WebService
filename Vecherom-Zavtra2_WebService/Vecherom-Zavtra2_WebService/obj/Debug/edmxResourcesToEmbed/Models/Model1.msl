@@ -13,5 +13,14 @@
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="procAddUser" FunctionName="vz2Model.Store.procAddUser" />
     <FunctionImportMapping FunctionImportName="procLogin" FunctionName="vz2Model.Store.procLogin" />
+    <EntitySetMapping Name="UserCfgs">
+      <EntityTypeMapping TypeName="vz2Model.UserCfg">
+        <MappingFragment StoreEntitySet="UserCfg">
+          <ScalarProperty Name="cfg" ColumnName="cfg" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
