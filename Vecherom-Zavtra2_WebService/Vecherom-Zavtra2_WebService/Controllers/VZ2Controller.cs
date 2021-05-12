@@ -14,7 +14,7 @@ namespace Vecherom_Zavtra2_WebService.Controllers
     {
 		#region Users
 		// PUT: api/users !!!!! [DEPRECATED] !!!!!
-		[HttpPut]
+		[HttpPost]
         [Route("api/users/{username}/{password}")]
         public HttpResponseMessage Signup(string username, string password)
         {
@@ -24,7 +24,7 @@ namespace Vecherom_Zavtra2_WebService.Controllers
             return response;
         }
         // PUT: api/users
-        [HttpPut]
+        [HttpPost]
         [Route("api/users")]
         public HttpResponseMessage Signup([FromBody] LoginUser user)
         {
@@ -45,7 +45,7 @@ namespace Vecherom_Zavtra2_WebService.Controllers
             return response;
         }
         // GET: api/users
-        [HttpGet]
+        [HttpPut]
         [Route("api/users")]
         public HttpResponseMessage Login([FromBody] LoginUser user)
         {
