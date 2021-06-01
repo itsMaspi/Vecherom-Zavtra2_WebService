@@ -13,16 +13,6 @@ namespace Vecherom_Zavtra2_WebService.Controllers
     public class VZ2Controller : ApiController
     {
 		#region Users
-		// PUT: api/users !!!!! [DEPRECATED] !!!!!
-		[HttpPost]
-        [Route("api/users/{username}/{password}")]
-        public HttpResponseMessage Signup(string username, string password)
-        {
-            Repository r = new Repository();
-            Response responseMessage = r.Signup(username, password);
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, responseMessage);
-            return response;
-        }
         // PUT: api/users
         [HttpPost]
         [Route("api/users")]
@@ -34,16 +24,6 @@ namespace Vecherom_Zavtra2_WebService.Controllers
             return response;
         }
 
-        // GET: api/users !!!!! [DEPRECATED] !!!!!
-        [HttpGet]
-        [Route("api/users/{username}/{password}")]
-        public HttpResponseMessage Login(string username, string password)
-        {
-            Repository r = new Repository();
-            Response responseMessage = r.Login(username, password);
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, responseMessage);
-            return response;
-        }
         // GET: api/users
         [HttpPut]
         [Route("api/users")]
@@ -55,22 +35,6 @@ namespace Vecherom_Zavtra2_WebService.Controllers
             return response;
         }
 
-        // DELETE: api/users !!!!! [DEPRECATED] !!!!!
-        [HttpDelete]
-        [Route("api/users/{username}/{password}")]
-        public HttpResponseMessage RemoveAccount(string username, string password)
-        {
-            Repository r = new Repository();
-            bool resp = false;
-            Response loginResponse = r.Login(username, password);
-            if (loginResponse != null && loginResponse.Message.Equals("User successfully logged in"))
-			{
-                r.RemoveAccount(loginResponse.UserID);
-                resp = true;
-            }
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, resp);
-            return response;
-        }
         // DELETE: api/users
         [HttpDelete]
         [Route("api/users")]
